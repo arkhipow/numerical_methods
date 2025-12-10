@@ -45,6 +45,10 @@ double SecantMethod::find_root(
 	double epsilon, 
 	double(*f)(double)
 ) {
+	if (epsilon <= 0) {
+		throw std::invalid_argument("epsilon <= 0");
+	}
+
 	for (int i = 0; (i < 1000) && (std::abs(b - a) > epsilon); ++i) {
 		a = a - (b - a) * f(a) / (f(b) - f(a));
 		b = b - (a - b) * f(b) / (f(a) - f(b));
@@ -59,6 +63,10 @@ double NewtonMethod::find_root(
 	double epsilon, 
 	double(*f)(double)
 ) {
+	if (epsilon <= 0) {
+		throw std::invalid_argument("epsilon <= 0");
+	}
+
 	auto df = [f, h = 1e-6](double x) -> double {
 		return (f(x + h) - f(x - h)) / (2 * h);
 	};
